@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace UE2
 {
@@ -22,6 +23,12 @@ namespace UE2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            // Register the Swagger generator, defining one or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "API Help", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +43,21 @@ namespace UE2
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseStaticFiles();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "docs/api";
+                c.InjectStylesheet("/swagger-ui/custom.css");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UE2 API");
+                c.InjectOnCompleteJavaScript("/swagger-ui/custom.js");
+                c.DocumentTitle("API Help - UE2 Documentation");
+            });
 
             app.UseStaticFiles();
 
