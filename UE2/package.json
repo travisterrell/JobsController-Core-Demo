@@ -3,7 +3,5 @@
   "name": "asp.net",
   "private": true,
   "devDependencies": {},
-  "dependencies": {
-    "vue": "^2.5.13"
-  }
+  "dependencies": {}
 }

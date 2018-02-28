@@ -12,7 +12,7 @@ namespace UE2.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return Redirect("docs/api");
         }
 
         public IActionResult About()
